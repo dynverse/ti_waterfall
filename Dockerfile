@@ -1,6 +1,6 @@
 FROM dynverse/dynwrap:r
 
-LABEL version 0.1.0.1
+LABEL version 0.1.0
 
 RUN wget http://www.cell.com/cms/attachment/2038326541/2052521637/mmc9.zip && unzip mmc9.zip
 
@@ -12,4 +12,4 @@ RUN R -e 'devtools::install_github("rcannood/RHmm")'
 
 ADD . /code
 
-ENTRYPOINT /code/run.sh
+ENTRYPOINT Rscript /code/run.R
