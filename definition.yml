@@ -1,5 +1,6 @@
 id: waterfall
 docker_repository: dynverse/ti_waterfall
+singularity_collection: 1588
 container_url: https://github.com/dynverse/ti_waterfall
 name: Waterfall
 type: algorithm
