@@ -1,4 +1,4 @@
-FROM dynverse/dynwrap:r
+FROM dynverse/dynwrapr:v0.1.0
 
 RUN wget http://www.cell.com/cms/attachment/2038326541/2052521637/mmc9.zip && unzip mmc9.zip
 
@@ -8,8 +8,6 @@ RUN R -e 'devtools::install_cran(c("matrixStats", "rgl", "pheatmap", "limma", "M
 
 RUN R -e 'devtools::install_github("rcannood/RHmm")'
 
-LABEL version 0.1.4.1
+COPY definition.yml run.R example.h5 /code/
 
-ADD . /code
-
-ENTRYPOINT Rscript /code/run.R
+ENTRYPOINT ["/code/run.R"]
