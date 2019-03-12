@@ -6,7 +6,8 @@ data <- dyntoy::generate_dataset(
   id = "specific_example/waterfall",
   num_cells = 99,
   num_features = 100,
-  model = "linear"
+  model = "linear",
+  normalise = FALSE
 )
 
 # add method specific args (if needed)
