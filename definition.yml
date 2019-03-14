@@ -12,18 +12,14 @@ method:
     family: Song
     email: shongju1@jhmi.edu
 
-
-
 manuscript:
   doi: 10.1016/j.stem.2015.07.013
   google_scholar_cluster_id: '4819957734275746771'
   publication_date: '2015-09-03'
 
-
 container:
   url: https://github.com/dynverse/ti_waterfall
   docker: dynverse/ti_waterfall
-
 
 wrapper:
   type: linear_trajectory
@@ -32,7 +28,6 @@ wrapper:
   - linear
   input_required:
   - expression
-
 
 parameters:
   - id: num_clusters
