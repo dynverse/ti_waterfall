@@ -10,6 +10,6 @@ RUN R -e 'devtools::install_cran(c("matrixStats", "rgl", "pheatmap", "limma", "M
 
 RUN R -e 'devtools::install_github("rcannood/RHmm")'
 
-COPY definition.yml run.R example.h5 /code/
+COPY definition.yml run.R example.sh /code/
 
 ENTRYPOINT ["/code/run.R"]
