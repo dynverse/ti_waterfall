@@ -17,7 +17,7 @@ source("/SupplementaryMethods/Waterfall.R")
 #   Load data                                                               ####
 
 expression <- as.matrix(task$expression)
-params <- task$params
+parameters <- task$parameters
 
 #   ____________________________________________________________________________
 #   Infer trajectory                                                        ####
@@ -26,7 +26,7 @@ params <- task$params
 checkpoints <- list(method_afterpreproc = as.numeric(Sys.time()))
 
 # run waterfall
-ps <- pseudotimeprog.foo(t(expression), k = params$num_clusters, color = rep("black", nrow(expression)))
+ps <- pseudotimeprog.foo(t(expression), k = parameters$num_clusters, color = rep("black", nrow(expression)))
 
 dimred <- as.matrix(ps[,colnames(ps) != "pseudotime", drop = FALSE])
 
