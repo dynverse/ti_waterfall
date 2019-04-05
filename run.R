@@ -1,25 +1,17 @@
-library(jsonlite)
-library(readr)
-library(dplyr)
-library(purrr)
+#!/usr/local/bin/Rscript
+
+task <- dyncli::main()
+
+library(dplyr, warn.conflicts = FALSE)
+library(purrr, warn.conflicts = FALSE)
 
 source("/SupplementaryMethods/Waterfall.R")
-
 
 #   ____________________________________________________________________________
 #   Load data                                                               ####
 
-data <- read_rds("/ti/input/data.rds")
-params <- jsonlite::read_json("/ti/input/params.json")
-
-#' @examples
-#' source("~/Downloads/SupplementaryMethods/Waterfall.R")
-#' data <- dyntoy::generate_dataset(id = "test", num_cells = 300, num_features = 300, model = "linear") %>% c(., .$prior_information)
-#' params <- yaml::read_yaml("containers/waterfall/definition.yml")$parameters %>%
-#'   {.[names(.) != "forbidden"]} %>%
-#'   map(~ .$default)
-
-expression <- data$expression
+expression <- as.matrix(task$expression)
+parameters <- task$parameters
 
 #   ____________________________________________________________________________
 #   Infer trajectory                                                        ####
@@ -28,22 +20,18 @@ expression <- data$expression
 checkpoints <- list(method_afterpreproc = as.numeric(Sys.time()))
 
 # run waterfall
-ps <- pseudotimeprog.foo(t(expression), k = params$num_clusters, color = rep("black", nrow(expression)))
+ps <- pseudotimeprog.foo(t(expression), k = parameters$num_clusters, color = rep("black", nrow(expression)))
 
-dimred <- ps[,colnames(ps) != "pseudotime", drop = FALSE]
+dimred <- as.matrix(ps[,colnames(ps) != "pseudotime", drop = FALSE])
 
 # TIMING: done with method
 checkpoints$method_aftermethod <- as.numeric(Sys.time())
 
-# return output
-output <- lst(
-  cell_ids = rownames(ps),
-  pseudotime = set_names(ps$pseudotime, rownames(ps)),
-  dimred = as.matrix(dimred),
-  timings = checkpoints
-)
-
 #   ____________________________________________________________________________
 #   Save output                                                             ####
 
-write_rds(output, "/ti/output/output.rds")
+dynwrap::wrap_data(cell_ids = rownames(ps)) %>%
+  dynwrap::add_linear_trajectory(pseudotime = set_names(ps$pseudotime, rownames(expression))) %>%
+  dynwrap::add_dimred(dimred = dimred) %>%
+  dynwrap::add_timings(timings = checkpoints) %>%
+  dyncli::write_output(task$output)

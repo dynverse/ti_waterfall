@@ -1,36 +1,39 @@
-id: waterfall
-docker_repository: dynverse/ti_waterfall
-singularity_collection: 1588
-container_url: https://github.com/dynverse/ti_waterfall
-name: Waterfall
-source: tool
-platform: R
-doi: 10.1016/j.stem.2015.07.013
-google_scholar_cluster_id: '4819957734275746771'
-trajectory_types: linear
-topology_inference: fixed
-publication_date: '2015-09-03'
-code_url: http://www.cell.com/cms/attachment/2038326541/2052521637/mmc9.zip
+method:
+  id: waterfall
+  name: Waterfall
+  source: tool
+  platform: R
+  url: http://www.cell.com/cms/attachment/2038326541/2052521637/mmc9.zip
+  authors:
+  - given: Jaehoon
+    family: Shin
+    email: shin@jhmi.edu
+  - given: Hongjun
+    family: Song
+    email: shongju1@jhmi.edu
+
+manuscript:
+  doi: 10.1016/j.stem.2015.07.013
+  google_scholar_cluster_id: '4819957734275746771'
+  publication_date: '2015-09-03'
+
+container:
+  url: https://github.com/dynverse/ti_waterfall
+  docker: dynverse/ti_waterfall
+
+wrapper:
+  type: linear_trajectory
+  topology_inference: fixed
+  trajectory_types:
+  - linear
+  input_required:
+  - expression
+
 parameters:
-  num_clusters:
+  - id: num_clusters
     type: integer
-    lower: 2.0
-    default: 10.0
-    upper: 20.0
-input:
-  format: rds
-  required: expression
-output:
-  format: rds
-  outputs:
-  - linear_trajectory
-  - dimred
-  - timings
-wrapper_type: linear_trajectory
-authors:
-- given: Jaehoon
-  family: Shin
-  email: shin@jhmi.edu
-- given: Hongjun
-  family: Song
-  email: shongju1@jhmi.edu
+    distribution:
+      type: uniform
+      lower: 2
+      upper: 20
+    default: 10
