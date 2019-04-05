@@ -1,15 +1,9 @@
 #!/usr/local/bin/Rscript
 
 task <- dyncli::main()
-# task = dyncli::main(
-#   c("--dataset", "/code/example.h5", "--output", "/mnt/output"),
-#   "/code/definition.yml"
-# )
 
-library(jsonlite)
-library(readr)
-library(dplyr)
-library(purrr)
+library(dplyr, warn.conflicts = FALSE)
+library(purrr, warn.conflicts = FALSE)
 
 source("/SupplementaryMethods/Waterfall.R")
 
